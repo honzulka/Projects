@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -std=c11 -Wall -Wextra -Werror -g
-GTK = `pkg-config --cflags gtk4`
+GTK = `pkg-config --cflags gtk4` `pkg-config --libs gtk4`
 
 TARGET = program
 
