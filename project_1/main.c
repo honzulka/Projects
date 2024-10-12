@@ -1,41 +1,34 @@
 #include <stdio.h>
-#include <gtk/gtk.h> 
-  
-static void print_hello() {
-    printf("Hello World\n");
+#include <stdlib.h> 
+#include <time.h>
+
+typedef struct Star {
+    int x;
+    int y;
+} Star;
+
+void create_random_star(int width, int height, Star *star) {
+    star->x = rand() % (width + 1); 
+    star->y = rand() % (height + 1);
 }
 
-static void activate(GtkApplication *app) {
-    GtkWidget *window = gtk_application_window_new(app);
+int main() {
+    printf("\n");
+    srand ( time(NULL));
+    struct Star *stars = (struct Star*)malloc(10 * sizeof(struct Star));
+    if (stars == NULL) return -1;
 
-    gtk_window_set_title(GTK_WINDOW(window), "Window");
-    GtkWidget *grid = gtk_grid_new();
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-
-    GtkWidget *button1 = gtk_button_new_with_label("Button 1");
-    g_signal_connect(button1, "clicked", G_CALLBACK(print_hello), NULL);
-    gtk_grid_attach(GTK_GRID(grid), button1, 0, 0, 1, 1);
-    // gtk_grid_attach(GtkGrid*, GtkWidget*, left, top, width, height);
-
-    GtkWidget *button2 = gtk_button_new_with_label("Button 2");
-    g_signal_connect(button2, "clicked", G_CALLBACK(print_hello), NULL);
-    gtk_grid_attach(GTK_GRID(grid), button2, 1, 0, 1, 1);
-
-    GtkWidget *button3 = gtk_button_new_with_label("Quit");
-    g_signal_connect_swapped(button3, "clicked", G_CALLBACK(gtk_window_destroy), window);
-    gtk_grid_attach(GTK_GRID(grid), button3, 0, 1, 2, 1);
-
-    GtkWidget *label = gtk_label_new("\nHello World\n");
-    gtk_label_set_selectable(GTK_LABEL(label), TRUE);
-    gtk_grid_attach(GTK_GRID(grid), label, 0, 2, 2, 1);
-
-    gtk_widget_set_visible(window, true);
-}
-
-int main(int argc, char *argv[]) {
-    GtkApplication *app = gtk_application_new("honzulka", G_APPLICATION_DEFAULT_FLAGS);
-    g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
-    int status = g_application_run(G_APPLICATION(app), argc, argv);
-    g_object_unref(app);
-    return status;
+    for (int i = 0; i < 10; i++)
+    {
+        create_random_star(500, 500, &stars[i]);
+    }
+    
+    for (int i = 0; i < 10; i++)
+    {
+        printf("star: [%d, %d]\n", stars[i].x, stars[i].y);
+    }
+    
+    free(stars);
+    
+    return 0;
 }
