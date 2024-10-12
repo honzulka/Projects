@@ -1,7 +1,7 @@
 PROCESSING_PATH = /opt/processing-4.3
-SKETCH = ../project1
+SKETCH = project_1
 
-all:
+proj1:
 	sudo $(PROCESSING_PATH)/processing-java --sketch=$(SKETCH) --run
 
-.PHONY: all 
+.PHONY: proj1 
